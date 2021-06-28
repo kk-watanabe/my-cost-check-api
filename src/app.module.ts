@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestModule } from './test/test.module';
+import { CreditCardModule } from './credit-card/credit-card.module';
 
 @Module({
-  imports: [TestModule],
+  imports: [
+    ConfigModule.forRoot({
+      load: [],
+      isGlobal: true,
+      envFilePath: ['.env.local'],
+    }),
+    TestModule,
+    CreditCardModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
