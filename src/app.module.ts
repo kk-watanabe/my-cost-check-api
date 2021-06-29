@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestModule } from './test/test.module';
-import { CreditCardModule } from './credit-card/credit-card.module';
+import { CostModule } from './cost/cost.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { CreditCardModule } from './credit-card/credit-card.module';
       envFilePath: ['.env.local'],
     }),
     TestModule,
-    CreditCardModule,
+    CostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
