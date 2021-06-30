@@ -12,7 +12,7 @@ export class CostController {
   }
 
   @Get(':id')
-  getTest(@Param('id') id: number): Cost {
+  getCost(@Param('id') id: number): Cost {
     return this.costService.getCost(id);
   }
 
