@@ -1,19 +1,19 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CostService } from './cost.service';
-import { Cost } from './cost.interface';
+import { PaymentCost } from './cost.interface';
 
 @Controller('cost')
 export class CostController {
   constructor(private readonly costService: CostService) {}
 
   @Get()
-  getAllCost(): Cost[] {
-    return this.costService.getAllCost();
+  getAllPaymentCosts(): PaymentCost[] {
+    return this.costService.getAllPaymentCosts();
   }
 
   @Get(':id')
-  getCost(@Param('id') id: number): Cost {
-    return this.costService.getCost(id);
+  getPaymentCost(@Param('id') id: number): PaymentCost {
+    return this.costService.getPaymentCost(id);
   }
 
   @Get('months')
@@ -21,8 +21,8 @@ export class CostController {
     return this.costService.getMonths();
   }
 
-  @Get('cost-names')
-  getCostNames(): string[] {
-    return this.costService.getCostNames();
+  @Get('payment-cost-names')
+  getPaymentCostNames(): string[] {
+    return this.costService.getPaymentCostNames();
   }
 }

@@ -1,22 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { Amount, Cost } from './cost.interface';
+import { MonthAmount, PaymentCost } from './cost.interface';
 import SteinStore = require('stein-js-client');
 
 @Injectable()
 export class CostService {
-  private costs: Cost[] = [];
+  private paymentCosts: PaymentCost[] = [];
   private months: Date[] = [];
-  private costNames: string[] = [];
+  private paymentCostNames: string[] = [];
 
   constructor() {
     const store = new SteinStore(process.env.STEIN_STORE_URL);
+
     store.read(process.env.STEIN_STORE_MAIN_SHEET_NAME).then((datas) => {
-      const result: Cost[] = datas.map((data) => {
+      const result: PaymentCost[] = datas.map((data) => {
         const keys = Object.keys(data);
-        const amounts: Amount[] = [];
+        const amounts: MonthAmount[] = [];
         const costName = data.credit_card;
 
-        this.costNames.push(costName);
+        this.paymentCostNames.push(costName);
 
         keys.forEach((key) => {
           if (key.match('/')) {
@@ -40,23 +41,24 @@ export class CostService {
         };
       });
 
-      this.costs = result;
+      this.paymentCosts = result;
+      console.log(this.paymentCosts);
     });
   }
 
-  getAllCost(): Cost[] {
-    return this.costs;
+  getAllPaymentCosts(): PaymentCost[] {
+    return this.paymentCosts;
   }
 
-  getCost(id: number): Cost {
-    return this.costs.find((cost) => cost.id === id);
+  getPaymentCost(id: number): PaymentCost {
+    return this.paymentCosts.find((cost) => cost.id === id);
   }
 
   getMonths(): Date[] {
     return this.months;
   }
 
-  getCostNames(): string[] {
-    return this.costNames;
+  getPaymentCostNames(): string[] {
+    return this.paymentCostNames;
   }
 }

@@ -1,10 +1,22 @@
-export interface Amount {
+export interface MonthAmount {
   date: Date;
   amount: number;
 }
 
-export interface Cost {
+export interface PaymentCost {
   id: number;
   name: string;
-  amounts: Amount[];
+  amounts: MonthAmount[];
+}
+
+export interface MonthCost {
+  id: number;
+  name: string;
+  amounts: MonthAmount[];
+}
+
+export interface MonthCost {
+  id: number;
+  name: string;
+  amounts: MonthAmount[];
 }

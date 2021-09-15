@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CostService } from './cost.service';
-import { COSTS, MONTHS, COST_NAMES } from './cost.mock';
+import { PAYMENT_COSTS, MONTHS, PAYMENT_COST_NAMES } from './cost.mock';
 
 jest.mock('stein-js-client', () => {
   return jest.fn().mockImplementation(() => {
@@ -24,16 +24,16 @@ describe('CostService', () => {
 
     service = module.get<CostService>(CostService);
 
-    Object.defineProperty(service, 'costs', {
-      value: COSTS,
+    Object.defineProperty(service, 'paymentCosts', {
+      value: PAYMENT_COSTS,
     });
 
     Object.defineProperty(service, 'months', {
       value: MONTHS,
     });
 
-    Object.defineProperty(service, 'costNames', {
-      value: COST_NAMES,
+    Object.defineProperty(service, 'paymentCostNames', {
+      value: PAYMENT_COST_NAMES,
     });
   });
 
@@ -41,21 +41,21 @@ describe('CostService', () => {
     expect(service).toBeDefined();
   });
 
-  it('call getAllCost', () => {
-    expect(service.getAllCost()).toEqual(COSTS);
+  it('call getAllPaymentCosts', () => {
+    expect(service.getAllPaymentCosts()).toEqual(PAYMENT_COSTS);
   });
 
-  it('call getCost', () => {
+  it('call getPaymentCost', () => {
     const ID = 3;
-    const COST = COSTS.find((cost) => cost.id === ID);
-    expect(service.getCost(ID)).toEqual(COST);
+    const COST = PAYMENT_COSTS.find((cost) => cost.id === ID);
+    expect(service.getPaymentCost(ID)).toEqual(COST);
   });
 
   it('call getMonths', () => {
     expect(service.getMonths()).toEqual(MONTHS);
   });
 
-  it('call getCostNames', () => {
-    expect(service.getCostNames()).toEqual(COST_NAMES);
+  it('call getPaymentCostNames', () => {
+    expect(service.getPaymentCostNames()).toEqual(PAYMENT_COST_NAMES);
   });
 });

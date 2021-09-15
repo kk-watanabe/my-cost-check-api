@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CostController } from './cost.controller';
 import { CostService } from './cost.service';
-import { COSTS, MONTHS, COST_NAMES } from './cost.mock';
+import { PAYMENT_COSTS, MONTHS, PAYMENT_COST_NAMES } from './cost.mock';
 
 jest.mock('stein-js-client', () => {
   return jest.fn().mockImplementation(() => {
@@ -33,19 +33,21 @@ describe('CostController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('call getAllCost', async () => {
-    jest.spyOn(service, 'getAllCost').mockImplementation(() => COSTS);
+  it('call getAllPaymentCosts', async () => {
+    jest
+      .spyOn(service, 'getAllPaymentCosts')
+      .mockImplementation(() => PAYMENT_COSTS);
 
-    expect(await controller.getAllCost()).toBe(COSTS);
+    expect(await controller.getAllPaymentCosts()).toBe(PAYMENT_COSTS);
   });
 
-  it('call getCost', async () => {
+  it('call getPaymentCost', async () => {
     const ID = 3;
-    const COST = COSTS.find((cost) => cost.id === ID);
+    const COST = PAYMENT_COSTS.find((cost) => cost.id === ID);
 
-    jest.spyOn(service, 'getCost').mockImplementation(() => COST);
+    jest.spyOn(service, 'getPaymentCost').mockImplementation(() => COST);
 
-    expect(await controller.getCost(ID)).toBe(COST);
+    expect(await controller.getPaymentCost(ID)).toBe(COST);
   });
 
   it('call getMonths', async () => {
@@ -54,9 +56,11 @@ describe('CostController', () => {
     expect(await controller.getMonths()).toBe(MONTHS);
   });
 
-  it('call getCostNames', async () => {
-    jest.spyOn(service, 'getCostNames').mockImplementation(() => COST_NAMES);
+  it('call getPaymentCostNames', async () => {
+    jest
+      .spyOn(service, 'getPaymentCostNames')
+      .mockImplementation(() => PAYMENT_COST_NAMES);
 
-    expect(await controller.getCostNames()).toBe(COST_NAMES);
+    expect(await controller.getPaymentCostNames()).toBe(PAYMENT_COST_NAMES);
   });
 });
