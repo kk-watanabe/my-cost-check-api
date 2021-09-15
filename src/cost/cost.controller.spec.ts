@@ -1,7 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CostController } from './cost.controller';
 import { CostService } from './cost.service';
-import { PAYMENT_COSTS, MONTHS, PAYMENT_COST_NAMES } from './cost.mock';
+import {
+  PAYMENT_COSTS,
+  MONTH_COSTS,
+  MONTHS,
+  PAYMENT_COST_NAMES,
+} from './cost.mock';
 
 jest.mock('stein-js-client', () => {
   return jest.fn().mockImplementation(() => {
@@ -48,6 +53,26 @@ describe('CostController', () => {
     jest.spyOn(service, 'getPaymentCost').mockImplementation(() => COST);
 
     expect(await controller.getPaymentCost(ID)).toBe(COST);
+  });
+
+  it('call getAllMonthConsts', async () => {
+    jest
+      .spyOn(service, 'getAllMonthConsts')
+      .mockImplementation(() => MONTH_COSTS);
+
+    expect(await controller.getAllMonthConsts()).toBe(MONTH_COSTS);
+  });
+
+  it('call getMonthConst', async () => {
+    const DATE = '2021-08-01';
+    const TARGET_DATE = new Date(DATE);
+    const COST = MONTH_COSTS.find(
+      (cost) => cost.date.getTime() === TARGET_DATE.getTime(),
+    );
+
+    jest.spyOn(service, 'getMonthConst').mockImplementation(() => COST);
+
+    expect(await controller.getMonthConst(DATE)).toBe(COST);
   });
 
   it('call getMonths', async () => {

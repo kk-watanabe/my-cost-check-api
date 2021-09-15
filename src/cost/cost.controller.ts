@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CostService } from './cost.service';
-import { PaymentCost } from './cost.interface';
+import { PaymentCost, MonthConst } from './cost.interface';
 
 @Controller('cost')
 export class CostController {
@@ -14,6 +14,17 @@ export class CostController {
   @Get(':id')
   getPaymentCost(@Param('id') id: number): PaymentCost {
     return this.costService.getPaymentCost(id);
+  }
+
+  @Get('all-month-consts')
+  getAllMonthConsts(): MonthConst[] {
+    return this.costService.getAllMonthConsts();
+  }
+
+  @Get('all-month-consts:date')
+  getMonthConst(@Param('date') date: string): MonthConst {
+    const targetDate = new Date(date);
+    return this.costService.getMonthConst(targetDate);
   }
 
   @Get('months')
